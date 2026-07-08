@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ClinicalQuiz from './ClinicalQuiz';
+import ThemeRevelation from './ThemeRevelation';
 
 export default function FeverCaseDetail() {
   const navigate = useNavigate();
@@ -14,7 +16,9 @@ export default function FeverCaseDetail() {
   const [dissolveWall, setDissolveWall] = useState(false);
   const [dissolveBubbles, setDissolveBubbles] = useState(false);
   const [showEnding, setShowEnding] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
   const [showTheme, setShowTheme] = useState(false);
+  const [scaleFactor, setScaleFactor] = useState(1);
   const endingAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // 第一次：查看完患者和医生流程后墙可点击
@@ -116,6 +120,24 @@ export default function FeverCaseDetail() {
     '患者期盼服药后明天就能完全退烧痊愈',
     '医生查看状态后，建议抽血化验 + 胸部 CT 检查',
   ];
+
+  const baseFontSizes = {
+    patientFlowTitle: 13,
+    patientFlowItem: 11,
+    patientFlowNote: 11,
+    patientReply: 12,
+    doctorFlowTitle: 13,
+    doctorFlowItem: 11,
+    doctorFlowNote: 14,
+    doctorPersuasion: 12,
+    wallText: 16,
+    subtitle: 12,
+    warningAlert: 12,
+    endingTitle: 18,
+    endingContent: 13,
+    endingBtn: 12,
+    backBtn: 12,
+  };
 
   // 患者内心思路流程图数据
   const patientFlow = [
@@ -247,7 +269,7 @@ export default function FeverCaseDetail() {
           style={{
             left: '0.5%',
             top: '3%',
-            width: '24%',
+            width: `${22 * scaleFactor}%`,
             opacity: showPatientFlow ? 1 : 0,
             transform: showPatientFlow ? 'translateX(0)' : 'translateX(-30px)',
           }}
@@ -262,7 +284,7 @@ export default function FeverCaseDetail() {
                     border: '1px solid rgba(200, 200, 200, 0.9)',
                     color: '#5a3a1a',
                     fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                    fontSize: 'clamp(13px, 1.3vw, 17px)',
+                    fontSize: `${Math.round(baseFontSizes.patientFlowTitle * scaleFactor)}px`,
                     fontWeight: '700',
                     boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
                   }}
@@ -280,7 +302,7 @@ export default function FeverCaseDetail() {
                         border: '1px solid rgba(200, 200, 200, 0.6)',
                         color: '#2c2c2c',
                         fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                        fontSize: 'clamp(11px, 1.1vw, 14px)',
+                        fontSize: `${Math.round(baseFontSizes.patientFlowItem * scaleFactor)}px`,
                         fontWeight: '500',
                         lineHeight: '1.4',
                       }}
@@ -318,7 +340,7 @@ export default function FeverCaseDetail() {
               border: '1px solid rgba(200, 200, 200, 0.8)',
               color: '#2c2c2c',
               fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-              fontSize: 'clamp(11px, 1vw, 14px)',
+              fontSize: `${Math.round(baseFontSizes.patientFlowNote * scaleFactor)}px`,
               fontWeight: '500',
               letterSpacing: '0.03em',
               lineHeight: '1.5',
@@ -335,7 +357,7 @@ export default function FeverCaseDetail() {
           style={{
             left: '0.5%',
             top: '3%',
-            width: '24%',
+            width: `${24 * scaleFactor}%`,
             opacity: dissolveBubbles ? 0 : showPatientReply ? 1 : 0,
             transform: dissolveBubbles
               ? 'translateX(-30px) scale(1.1)'
@@ -371,13 +393,13 @@ export default function FeverCaseDetail() {
               style={{
                 color: '#5a3a1a',
                 fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                fontSize: 'clamp(12px, 1.2vw, 15px)',
+                fontSize: `${Math.round(baseFontSizes.patientReply * scaleFactor)}px`,
                 fontWeight: '500',
                 lineHeight: '1.9',
                 letterSpacing: '0.02em',
               }}
             >
-              <div style={{ marginBottom: '8px', color: '#5a3a1a', fontWeight: '700' }}>
+              <div style={{ marginBottom: `${8 * scaleFactor}px`, color: '#5a3a1a', fontWeight: '700' }}>
                 患者回复：
               </div>
               <div style={{ marginBottom: '6px' }}>医生，听您这么一说</div>
@@ -398,7 +420,7 @@ export default function FeverCaseDetail() {
           style={{
             right: '0.5%',
             top: '3%',
-            width: '24%',
+            width: `${20 * scaleFactor}%`,
             opacity: showDoctorFlow ? 1 : 0,
             transform: showDoctorFlow ? 'translateX(0)' : 'translateX(30px)',
           }}
@@ -414,7 +436,7 @@ export default function FeverCaseDetail() {
                     border: '1px solid rgba(180, 200, 220, 0.9)',
                     color: '#1a3a5c',
                     fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                    fontSize: 'clamp(13px, 1.3vw, 17px)',
+                    fontSize: `${Math.round(baseFontSizes.doctorFlowTitle * scaleFactor)}px`,
                     fontWeight: '700',
                     boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
                   }}
@@ -433,7 +455,7 @@ export default function FeverCaseDetail() {
                         border: '1px solid rgba(180, 200, 220, 0.6)',
                         color: '#2c2c2c',
                         fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                        fontSize: 'clamp(11px, 1.1vw, 14px)',
+                        fontSize: `${Math.round(baseFontSizes.doctorFlowItem * scaleFactor)}px`,
                         fontWeight: '500',
                         lineHeight: '1.4',
                       }}
@@ -473,7 +495,7 @@ export default function FeverCaseDetail() {
               backdropFilter: 'blur(4px)',
               color: '#ffffff',
               fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-              fontSize: 'clamp(14px, 1.5vw, 19px)',
+              fontSize: `${Math.round(baseFontSizes.doctorFlowNote * scaleFactor)}px`,
               fontWeight: '700',
               letterSpacing: '0.03em',
               lineHeight: '1.5',
@@ -491,7 +513,7 @@ export default function FeverCaseDetail() {
           style={{
             right: '0.5%',
             top: '3%',
-            width: '24%',
+            width: `${24 * scaleFactor}%`,
             opacity: dissolveBubbles ? 0 : showDoctorPersuasion ? 1 : 0,
             transform: dissolveBubbles
               ? 'translateX(30px) scale(1.1)'
@@ -527,13 +549,13 @@ export default function FeverCaseDetail() {
               style={{
                 color: '#1a3a5c',
                 fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                fontSize: 'clamp(12px, 1.2vw, 15px)',
+                fontSize: `${Math.round(baseFontSizes.doctorPersuasion * scaleFactor)}px`,
                 fontWeight: '500',
                 lineHeight: '1.9',
                 letterSpacing: '0.02em',
               }}
             >
-              <div style={{ marginBottom: '8px', color: '#1a3a5c', fontWeight: '700' }}>
+              <div style={{ marginBottom: `${8 * scaleFactor}px`, color: '#1a3a5c', fontWeight: '700' }}>
                 医生耐心劝说：
               </div>
               <div style={{ marginBottom: '6px' }}>我特别理解你上班请假不容易，</div>
@@ -574,7 +596,7 @@ export default function FeverCaseDetail() {
               border: '1px solid rgba(255, 255, 255, 0.2)',
               color: '#ffffff',
               fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-              fontSize: 'clamp(16px, 1.8vw, 24px)',
+              fontSize: `${Math.round(baseFontSizes.wallText * scaleFactor)}px`,
               fontWeight: '700',
               letterSpacing: '0.05em',
               lineHeight: '1.8',
@@ -591,7 +613,7 @@ export default function FeverCaseDetail() {
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-1000"
           style={{
-            maxWidth: '28%',
+            maxWidth: `${28 * scaleFactor}%`,
             opacity: dissolveSubtitles ? 0 : 1,
             transform: dissolveSubtitles
               ? 'translate(-50%, -50%) scale(1.2)'
@@ -609,7 +631,7 @@ export default function FeverCaseDetail() {
                   backdropFilter: 'blur(4px)',
                   color: '#f8f8f8',
                   fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                  fontSize: 'clamp(12px, 1.3vw, 18px)',
+                  fontSize: `${Math.round(baseFontSizes.subtitle * scaleFactor)}px`,
                   fontWeight: '400',
                   letterSpacing: '0.05em',
                   textShadow: '0 1px 3px rgba(0,0,0,0.5)',
@@ -630,7 +652,7 @@ export default function FeverCaseDetail() {
           style={{
             right: '1%',
             bottom: '12%',
-            width: '18%',
+            width: `${15 * scaleFactor}%`,
             opacity: showDoctorFlow && !showDoctorPersuasion ? 1 : 0,
             transform: showDoctorFlow && !showDoctorPersuasion ? 'translateY(0)' : 'translateY(20px)',
           }}
@@ -642,7 +664,7 @@ export default function FeverCaseDetail() {
               border: '3px solid #8b0000',
               color: '#ffffff',
               fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-              fontSize: 'clamp(12px, 1.2vw, 16px)',
+              fontSize: `${Math.round(baseFontSizes.warningAlert * scaleFactor)}px`,
               fontWeight: '700',
               textAlign: 'center',
               lineHeight: '1.5',
@@ -666,7 +688,7 @@ export default function FeverCaseDetail() {
               ? 'translate(-50%, -50%) scale(1)'
               : 'translate(-50%, -50%) scale(0.9)',
             opacity: showEnding ? 1 : 0,
-            width: '50%',
+            width: `${45 * scaleFactor}%`,
           }}
         >
           <div
@@ -686,11 +708,11 @@ export default function FeverCaseDetail() {
               style={{
                 color: '#ffffff',
                 fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                fontSize: 'clamp(18px, 2vw, 26px)',
+                fontSize: `${Math.round(baseFontSizes.endingTitle * scaleFactor)}px`,
                 fontWeight: '700',
                 letterSpacing: '0.08em',
-                marginBottom: '16px',
-                paddingBottom: '12px',
+                marginBottom: `${16 * scaleFactor}px`,
+                paddingBottom: `${12 * scaleFactor}px`,
                 borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                 textShadow: '0 2px 8px rgba(0,0,0,0.6)',
               }}
@@ -703,14 +725,14 @@ export default function FeverCaseDetail() {
               style={{
                 color: '#4a9eff',
                 fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                fontSize: 'clamp(13px, 1.3vw, 17px)',
+                fontSize: `${Math.round(baseFontSizes.endingContent * scaleFactor)}px`,
                 fontWeight: '500',
                 lineHeight: '2',
                 letterSpacing: '0.03em',
                 textShadow: '0 0 8px rgba(74, 158, 255, 0.3)',
               }}
             >
-              <div style={{ marginBottom: '6px' }}>患者配合完成抽血、胸部 CT 检查后，</div>
+              <div style={{ marginBottom: `${6 * scaleFactor}px` }}>患者配合完成抽血、胸部 CT 检查后，</div>
               <div style={{ marginBottom: '6px' }}>确诊细菌性肺炎，明确本次高烧根源；</div>
               <div style={{ marginBottom: '6px' }}>医生根据病因开具抗感染药物对症治疗，</div>
               <div style={{ marginBottom: '6px' }}>规范用药后患者体温平稳下降，</div>
@@ -722,74 +744,94 @@ export default function FeverCaseDetail() {
               style={{
                 color: '#ff4a4a',
                 fontFamily: 'Microsoft YaHei, SimHei, sans-serif',
-                fontSize: 'clamp(13px, 1.3vw, 17px)',
+                fontSize: `${Math.round(baseFontSizes.endingContent * scaleFactor)}px`,
                 fontWeight: '500',
                 lineHeight: '2',
                 letterSpacing: '0.03em',
                 textShadow: '0 0 8px rgba(255, 74, 74, 0.3)',
                 borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-                paddingTop: '12px',
+                paddingTop: `${12 * scaleFactor}px`,
               }}
             >
-              <div style={{ marginBottom: '6px' }}>若当初仅单纯服用退烧药压制体温、</div>
+              <div style={{ marginBottom: `${6 * scaleFactor}px` }}>若当初仅单纯服用退烧药压制体温、</div>
               <div style={{ marginBottom: '6px' }}>未针对根源治疗，</div>
               <div style={{ marginBottom: '6px' }}>肺部感染会持续加重，</div>
               <div style={{ marginBottom: '6px' }}>后续可能发展为重症肺炎、败血症，</div>
               <div>甚至引发休克留下长期后遗症。</div>
             </div>
 
-            {/* 学习感悟按钮（结局框内右下角） */}
+            {/* 你以为结束了？按钮（结局框内右下角） */}
             <div style={{ position: 'absolute', right: '16px', bottom: '12px' }}>
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!showEnding) return;
                   if (endingAudioRef.current) {
                     endingAudioRef.current.pause();
                     endingAudioRef.current = null;
                   }
-                  setShowTheme(true);
-                  const audio = new Audio('/audio/theme-voice.mp3');
-                  audio.volume = 1;
-                  audio.play().catch(() => {});
+                  setShowQuiz(true);
                 }}
                 className="rounded-lg transition-all duration-300 hover:scale-105 font-bold tracking-wider"
                 style={{
-                  background: 'linear-gradient(135deg, #1a3a5c 0%, #2c5a8c 100%)',
+                  background: 'linear-gradient(135deg, #8b0000 0%, #b22222 100%)',
                   color: '#ffffff',
-                  border: '2px solid #4a9eff',
-                  padding: '8px 20px',
-                  fontSize: 'clamp(12px, 1.2vw, 16px)',
-                  boxShadow: '0 4px 12px rgba(30, 80, 160, 0.5)',
+                  border: '2px solid #ff6b6b',
+                  padding: `${8 * scaleFactor}px ${20 * scaleFactor}px`,
+                  fontSize: `${Math.round(baseFontSizes.endingBtn * scaleFactor)}px`,
+                  boxShadow: '0 4px 12px rgba(139, 0, 0, 0.5)',
                   textShadow: '0 1px 2px rgba(0,0,0,0.5)',
                 }}
               >
-                学习感悟
+                你以为结束了？
               </button>
             </div>
           </div>
         </div>
+
+        {/* 临床问答组件 */}
+        {showQuiz && (
+          <ClinicalQuiz
+            onComplete={() => {
+              setShowQuiz(false);
+              setShowTheme(true);
+              const audio = new Audio('/audio/theme-voice.mp3');
+              audio.volume = 1;
+              audio.play().catch(() => {});
+            }}
+          />
+        )}
+
+        {showTheme && (
+          <ThemeRevelation
+            onComplete={() => {
+              navigate('/main');
+            }}
+          />
+        )}
 
         {/* 背景虚化遮罩 */}
         <div
           className="absolute inset-0 z-35 transition-all duration-1000"
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.6)',
-            backdropFilter: showTheme ? 'blur(12px)' : 'blur(0px)',
-            opacity: showTheme ? 1 : 0,
-            pointerEvents: showTheme ? 'auto' : 'none',
+            backdropFilter: showTheme ? 'blur(0px)' : showQuiz ? 'blur(0px)' : 'blur(0px)',
+            opacity: showQuiz ? 1 : 0,
+            pointerEvents: showQuiz ? 'auto' : 'none',
           }}
         />
 
-        {/* 主题文字 */}
+        {/* 旧版主题文字（已被 ThemeRevelation 替代） */}
         <div
-          className="absolute z-40 transition-all duration-1000"
+          className="absolute z-40 transition-all duration-1000 hidden"
           style={{
             left: '50%',
             top: '50%',
             transform: showTheme
               ? 'translate(-50%, -50%) scale(1)'
               : 'translate(-50%, -50%) scale(0.8)',
-            opacity: showTheme ? 1 : 0,
-            pointerEvents: showTheme ? 'auto' : 'none',
+            opacity: 0,
+            pointerEvents: 'none',
             textAlign: 'center',
           }}
         >
@@ -819,14 +861,14 @@ export default function FeverCaseDetail() {
           style={{
             right: '1%',
             bottom: '2%',
-            width: '15%',
-            height: '8%',
+            width: `${15 * scaleFactor}%`,
+            height: `${8 * scaleFactor}%`,
             background: 'linear-gradient(135deg, #8b0000 0%, #b22222 100%)',
             color: '#f5e6d3',
             border: '3px solid #d4a574',
             textShadow: '0 1px 2px rgba(0,0,0,0.5)',
             boxShadow: '0 6px 20px rgba(139, 0, 0, 0.6)',
-            fontSize: 'clamp(12px, 1.5vw, 20px)',
+            fontSize: `${Math.round(baseFontSizes.backBtn * scaleFactor)}px`,
           }}
         >
           返回主页面

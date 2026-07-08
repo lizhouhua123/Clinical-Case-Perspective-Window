@@ -20,6 +20,9 @@ export default function FeverCaseModal({ onClose }: FeverCaseModalProps) {
 
   const handleDetailClick = () => {
     setDetailClicked(true);
+    const audio = new Audio('/audio/fever-news-voice.mp3');
+    audio.volume = 1;
+    audio.play().catch(() => {});
     setTimeout(() => {
       setShowNews(true);
       setDetailClicked(false);
@@ -99,7 +102,7 @@ export default function FeverCaseModal({ onClose }: FeverCaseModalProps) {
       <div
         className="relative"
         style={{
-          width: 'min(90vw, 700px)',
+          width: 'min(80vw, 600px)',
           maxHeight: '90vh',
           animation: 'scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
         }}

@@ -4,15 +4,15 @@ import FeverCaseModal from '@/components/Main/FeverCaseModal';
 import { playPageFlipSound } from '@/utils/soundEffects';
 
 const caseTitles = [
-  '发热待查',
-  '头晕原因',
-  '胸痛鉴别',
-  '腹痛诊断',
-  '头痛评估',
-  '呼吸困难',
-  '腰痛排查',
-  '乏力原因',
-  '皮疹鉴别',
+  '发烧为何要检查',
+  '排队三时看五分',
+  '高血药需终身服',
+  '拍片正常为何疼',
+  '术后为何越治越差',
+  '血糖正常还需测',
+  '术前签字恐惧症',
+  '医生为何不肯定',
+  '抽血为何抽多管',
 ];
 
 // 左侧科普栏素材配置
