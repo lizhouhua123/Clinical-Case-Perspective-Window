@@ -1,57 +1,166 @@
-# React + TypeScript + Vite
+# 病例墙透视窗 | Clinical Case Perspective Window
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 医患并非对立，而是携手并肩、共同对抗疾病的同盟。
 
-Currently, two official plugins are available:
+## 在线体验
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+立即访问部署的网站进行游玩：
 
-## Expanding the ESLint configuration
+**[https://clinical-case-perspective-window-e8.vercel.app/](https://clinical-case-perspective-window-e8.vercel.app/)**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+> 建议在电脑端浏览器中体验，以获得最佳交互效果。
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+一个沉浸式医患沟通教育互动网站，通过角色扮演、剧情互动和临床问答，帮助用户理解医患之间的认知差异和信息不对称问题。
+
+## 项目简介
+
+在当下的医疗环境中，患者对医生决策的不信任，医生对患者不信任导致的防御性医疗，让两者之间形成了厚重的墙壁。患者看不见医生背后的风险与压力，医生看不见患者的焦虑与担忧。
+
+本项目通过沉浸式互动体验，让用户分别站在患者和医生的视角，亲身感受这种信息差，从而理解医患双方的立场，打破认知隔阂。
+
+## 核心功能
+
+### 1. 医患对话沉浸式体验
+- 双视角对话系统（患者 / 医生）
+- 语音同步字幕播放
+- 认知冲突可视化呈现
+- 多阶段交互流程（思考链 → 对话 → 劝说 → 墙体消散）
+
+### 2. 临床病例交互式问答
+- 模拟真实临床场景的病例展示
+- 多选项决策机制（选项中无正确答案，引导思考）
+- 红字补充关键信息，揭示诊断盲区
+- 三个独立病例：症状误判、病史遗漏、非感染性发热
+
+### 3. 主题升华动画
+- 文字墙推墙互动（误解 / 猜疑 / 信息差 / 不信任）
+- 患者与医生合力破墙
+- 全屏核心感悟展示与语音播放
+
+## 技术栈
+
+- **前端框架**：React 18 + TypeScript
+- **构建工具**：Vite
+- **样式方案**：TailwindCSS
+- **路由管理**：React Router
+- **音频处理**：Web Audio API
+- **部署平台**：Vercel + GitHub
+
+## 快速开始
+
+### 环境要求
+
+- Node.js >= 18
+- npm >= 9
+
+### 安装与运行
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+启动后访问 http://localhost:5173/
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 页面路由
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+| 页面 | 路由 | 说明 |
+|------|------|------|
+| 序幕页 | `/` | 医患对话序幕，认知冲突引入 |
+| 主页面 | `/main` | 病例墙主界面，9个病历单入口 |
+| 特别会诊详情 | `/fever-case-detail` | 发热病例完整交互流程 |
+| 主页面调试 | `/main-debug` | 素材位置可视化调整工具 |
+| 病例调试 | `/fever-case-debug` | 弹窗尺寸调整工具 |
+| 主题调试 | `/theme-debug` | 破墙动画调试工具 |
+
+## 项目结构
+
 ```
+src/
+├── components/
+│   ├── Main/
+│   │   ├── ClinicalQuiz.tsx       # 临床问答组件
+│   │   ├── FeverCaseDetail.tsx    # 发热病例核心交互
+│   │   ├── FeverCaseModal.tsx     # 病例详情弹窗
+│   │   └── ThemeRevelation.tsx    # 主题升华动画
+│   └── Prologue/
+│       ├── ProloguePage.tsx       # 序幕页面
+│       ├── PatientColumn.tsx      # 患者侧对话
+│       ├── DoctorColumn.tsx       # 医生侧对话
+│       └── MedicalRecordModal.tsx # 病历单弹窗
+├── pages/
+│   ├── MainPage.tsx               # 主页面
+│   ├── MainPageDebug.tsx          # 主页面调试
+│   ├── FeverCaseDebug.tsx         # 病例调试
+│   └── ThemeDebug.tsx             # 主题调试
+├── hooks/
+│   ├── useAnimationSequence.ts    # 动画序列控制
+│   └── useTheme.ts                # 主题管理
+├── data/
+│   └── conflicts.ts               # 对话内容数据
+└── utils/
+    └── soundEffects.ts            # 音效工具
+```
+
+## 交互流程
+
+```
+序幕页（医患对话）
+    ↓
+主页面（病例墙）
+    ↓ 点击发热待查
+特别会诊详情
+    ├─ 背景介绍（字幕+语音）
+    ├─ 患者思考链
+    ├─ 医生诊断思维
+    ├─ 墙体点击 → 认知差距提示
+    ├─ 医生劝说 → 患者回复
+    ├─ 墙体消散动画
+    ├─ 结局展示（检查后续）
+    └─ 你以为结束了？ → 临床问答
+         ├─ 病例一：症状误判
+         ├─ 病例二：病史遗漏
+         ├─ 病例三：非感染性发热
+         └─ 主题升华（医患破墙）
+```
+
+## 三个临床病例
+
+| 病例 | 主题 | 核心启示 |
+|------|------|----------|
+| 病例一 | 症状误判 | 流感被误认为普通感冒，遗漏基础病史 |
+| 病例二 | 病史遗漏 | 患者未提及养鹦鹉，导致鹦鹉热误诊 |
+| 病例三 | 非感染性发热 | 发热不一定都是感染，自身免疫病也会发热 |
+
+每个病例提供3个看似合理但有漏洞的选项，用户提交后以红字补充关键信息，揭示诊断盲区。
+
+## 设计理念
+
+- **非说教式**：通过悬念设计让用户主动探索和思考
+- **沉浸体验**：语音同步、动画过渡、角色扮演增强代入感
+- **真实案例**：基于真实临床案例改编，具有说服力
+- **双向理解**：同时呈现患者和医生两个视角的思考过程
+
+## 开发工具
+
+项目内置三个可视化调试页面，支持实时调整素材位置和尺寸：
+
+- 滑块 + 数值输入双重调节方式
+- 可拖拽控制面板
+- 实时预览效果
+
+## 部署
+
+项目已部署至 Vercel，代码托管于 GitHub：
+
+- **GitHub 仓库**：[Clinical-Case-Perspective-Window](https://github.com/lizhouhua123/Clinical-Case-Perspective-Window)
+
+## License
+
+MIT
